@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.exam.wy.mapper.QuestionsMapper" >
+  <resultMap id="BaseResultMap" type="com.exam.wy.bean.Questions" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="questions" property="questions" jdbcType="VARCHAR" />
+    <result column="correctAnswer" property="correctAnswer" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="sortnum" property="sortnum" jdbcType="INTEGER" />
+    <result column="prepare" property="prepare" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, questions, correctAnswer, status, sortnum, prepare
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from questions
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from questions
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.exam.wy.bean.Questions" >
+    insert into questions (questions, correctAnswer, 
+      status, sortnum, prepare
+      )
+    values ( #{questions,jdbcType=VARCHAR}, #{correctanswer,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{sortnum,jdbcType=INTEGER}, #{prepare,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.exam.wy.bean.Questions" >
+    insert into questions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="questions != null" >
+        questions,
+      </if>
+      <if test="correctanswer != null" >
+        correctAnswer,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="sortnum != null" >
+        sortnum,
+      </if>
+      <if test="prepare != null" >
+        prepare,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="questions != null" >
+        #{questions,jdbcType=VARCHAR},
+      </if>
+      <if test="correctanswer != null" >
+        #{correctanswer,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sortnum != null" >
+        #{sortnum,jdbcType=INTEGER},
+      </if>
+      <if test="prepare != null" >
+        #{prepare,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.exam.wy.bean.Questions" >
+    update questions
+    <set >
+      <if test="questions != null" >
+        questions = #{questions,jdbcType=VARCHAR},
+      </if>
+      <if test="correctanswer != null" >
+        correctAnswer = #{correctanswer,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sortnum != null" >
+        sortnum = #{sortnum,jdbcType=INTEGER},
+      </if>
+      <if test="prepare != null" >
+        prepare = #{prepare,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.exam.wy.bean.Questions" >
+    update questions
+    set questions = #{questions,jdbcType=VARCHAR},
+      correctAnswer = #{correctanswer,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      sortnum = #{sortnum,jdbcType=INTEGER},
+      prepare = #{prepare,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 一对多配置  一个问题对应多个选项 -->
+    <select id="selectQuestionsByQid" resultMap="selectQuestionsByQidResultMap">
+  		select id,questions,correctAnswer from questions where status =1 ORDER BY sortnum
+  </select>
+  <resultMap type="Questions" id="selectQuestionsByQidResultMap" extends="BaseResultMap" >
+  		
+ 		<!--
+ 		   映射一对多 collection
+ 		 ofType 指定集合所包含的类型   
+ 		   这个属性作用：它用来将 JavaBean（或字段）属性的类型和集合存储的类型区分开来。
+ 		 -->
+  		<collection property="answers" ofType="String" select="selectAnswerByQid" column="id">	
+  		</collection>
+  </resultMap>
+  
+  <select id="selectAnswerByQid" resultType="String">
+  		SELECT choice from answers where qid=#{qid} and status=1 ORDER BY sortnum
+  </select>
+  
+</mapper>

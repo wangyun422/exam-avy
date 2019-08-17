@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/exam_avy/exam_avy.iml" filepath="$PROJECT_DIR$/exam_avy/exam_avy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam_wy/exam_wy.iml" filepath="$PROJECT_DIR$/exam_wy/exam_wy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maven-1/maven-1.iml" filepath="$PROJECT_DIR$/maven-1/maven-1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maven-2/maven-2.iml" filepath="$PROJECT_DIR$/maven-2/maven-2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maven-ssm/maven-ssm.iml" filepath="$PROJECT_DIR$/maven-ssm/maven-ssm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-1/web-1.iml" filepath="$PROJECT_DIR$/web-1/web-1.iml" />
+    </modules>
+  </component>
+</project>

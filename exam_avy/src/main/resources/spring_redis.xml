@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        
+	<!-- 1. Redis连接池配置 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<!--最大连接数-->
+		<property name="maxTotal" value="10"></property>
+		<!--最大空闲数-->
+		<property name="maxIdle" value="2"></property>
+	</bean>
+	<!-- 2. jedisConnectionFactory-->
+	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<!--主句名称-->
+		<property name="hostName" value="192.168.184.130"></property>
+		<!--端口号-->
+		<property name="port" value="6379"></property>
+		<!--密码-->
+		<property name="password" value="redis"></property>
+		<!--自定义连接配置-->
+		<constructor-arg index="0" ref="jedisPoolConfig"></constructor-arg>
+	</bean>
+	<!-- 3. redisTemplate模板-->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jedisConnectionFactory"></property>
+
+		<!-- 序列化时 String key-->
+		<property name="keySerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+		</property>
+		<!--String value-->
+		<property name="valueSerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+		</property>
+		<!-- 序列化时 hash key-->
+		<property name="hashKeySerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+		</property>
+		<!--hash value-->
+	<!--    <property name="hashValueSerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+		</property>-->
+	</bean>
+</beans>
