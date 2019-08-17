@@ -19,4 +19,7 @@ public class User implements Serializable {
     public static String keyName(){
         return "user:";
     }
+
+
+    //再提交测试1
 }
