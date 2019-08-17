@@ -20,6 +20,4 @@ public class Questions {
     private String[] answers;
 
    //这是一个注释
-
-    //我是组员，我要测试
 }
