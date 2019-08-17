@@ -19,5 +19,5 @@ public class Questions {
     //一对多关联(需要传的Json串里,答案是以数组的形式)
     private String[] answers;
 
-   
+   //这是一个注释
 }
